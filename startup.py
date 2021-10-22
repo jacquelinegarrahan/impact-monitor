@@ -25,9 +25,7 @@ def import_docs(mongo_host, mongo_port, output_dir):
                 # Remove this
                 path_name = document["outputs"]["plot_file"]
                 document["isotime"] = parser.isoparse(document["isotime"])
-                file_base = path_name.split("/")[-1]
-                file_base = file_base.replace(":", "%3A")
-                document["outputs"]["plot_file"] = f"https://raw.githubusercontent.com/jacquelinegarrahan/impact-grafana-mongodb/main/files/{file_base}"
+                
                 if results.count_documents({"filename" : filename}) == 0:
                     results.insert_one(document)
                     logger.info("Processed %s.", filename)
