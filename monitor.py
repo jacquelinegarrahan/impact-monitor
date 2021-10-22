@@ -4,6 +4,7 @@ import os
 import logging
 import time
 import json
+from dateutil import parser
 from pymongo import MongoClient
 from watchdog.observers.polling import PollingObserver 
 from watchdog.events import FileSystemEventHandler
@@ -28,7 +29,7 @@ class Handler(FileSystemEventHandler):
                     with open(file_path, "r") as f:
                         document = json.load(f)
                         document["filename"] = file_path
-                        search = self._results.find({"filename" : file_path})
+                        document["isotime"] = parser.isoparse(document["isotime"])
 
                         if self._results.count_documents({"filename" : file_path}) == 0:
                             self._results.insert_one(document)
@@ -67,5 +68,5 @@ if __name__ == "__main__":
     MONGO_HOST = os.environ["MONGO_HOST"]
     MONGO_PORT = int(os.environ["MONGO_PORT"])
     OUTPUT_DIR = os.environ["OUTPUT_DIR"]
-    watcher = Watcher(OUTPUT_DIR, MONGO_PORT, MONGO_HOST)
+    watcher = Watcher(OUTPUT_DIR, MONGO_HOST, MONGO_PORT)
     watcher.run()

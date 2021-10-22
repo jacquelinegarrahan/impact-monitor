@@ -2,8 +2,10 @@
 """
 from pymongo import MongoClient
 import json
-import dateutil.parser
+from dateutil import parser
 import os 
+import time
+import logging
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +24,7 @@ def import_docs(mongo_host, mongo_port, output_dir):
 
                 # Remove this
                 path_name = document["outputs"]["plot_file"]
-                document["isotime"] = dateutil.parser.isoparse(document["isotime"])
+                document["isotime"] = parser.isoparse(document["isotime"])
                 file_base = path_name.split("/")[-1]
                 file_base = file_base.replace(":", "%3A")
                 document["outputs"]["plot_file"] = f"https://raw.githubusercontent.com/jacquelinegarrahan/impact-grafana-mongodb/main/files/{file_base}"
@@ -46,6 +48,6 @@ if __name__ == "__main__":
     MONGO_HOST = os.environ["MONGO_HOST"]
     MONGO_PORT = int(os.environ["MONGO_PORT"])
     OUTPUT_DIR = os.environ["OUTPUT_DIR"]
-    import_docs(MONGO_HOST, MONGO_PORT, OUPUT_DIR)
+    import_docs(MONGO_HOST, MONGO_PORT, OUTPUT_DIR)
 
 
