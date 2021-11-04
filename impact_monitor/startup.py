@@ -39,9 +39,6 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
-    
-    # give time to start
-    time.sleep(30)
 
     MONGO_HOST = os.environ["MONGO_HOST"]
     MONGO_PORT = int(os.environ["MONGO_PORT"])

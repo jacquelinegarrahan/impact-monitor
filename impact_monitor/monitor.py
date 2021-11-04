@@ -43,7 +43,7 @@ class Handler(FileSystemEventHandler):
 
 
 class Watcher:
-    def __init__(self, directory, mongo_host, mongo_port):
+    def __init__(self, mongo_host, mongo_port, directory):
         self.event_handler = Handler(mongo_host, mongo_port)
         self.observer = PollingObserver()
         self.observer.schedule(self.event_handler, directory, recursive=True)
@@ -56,17 +56,18 @@ class Watcher:
         except KeyboardInterrupt:
             self.observer.stop()
 
+def run(mongo_host, mongo_port, output_dir):
+    watcher = Watcher(mongo_host, mongo_port, output_dir)
+    watcher.run()
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
-    
-    # give time to start
-    time.sleep(30)
 
     MONGO_HOST = os.environ["MONGO_HOST"]
     MONGO_PORT = int(os.environ["MONGO_PORT"])
     OUTPUT_DIR = os.environ["OUTPUT_DIR"]
-    watcher = Watcher(OUTPUT_DIR, MONGO_HOST, MONGO_PORT)
-    watcher.run()
+
+    run(MONGO_HOST, MONGO_PORT, OUTPUT_DIR)
