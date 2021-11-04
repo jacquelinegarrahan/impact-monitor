@@ -35,7 +35,7 @@ def import_docs(mongo_host, mongo_port, output_dir):
                 logger.exception("Error processing %s", filename)
 
 
-if __name__ == "__main__":
+def main():
     logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
@@ -44,5 +44,9 @@ if __name__ == "__main__":
     MONGO_PORT = int(os.environ["MONGO_PORT"])
     OUTPUT_DIR = os.environ["OUTPUT_DIR"]
     import_docs(MONGO_HOST, MONGO_PORT, OUTPUT_DIR)
+
+
+if __name__ == "__main__":
+    main()
 
 

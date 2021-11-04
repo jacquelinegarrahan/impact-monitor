@@ -1,14 +1,13 @@
 FROM continuumio/miniconda3
 
 COPY environment.yml /app/environment.yml
-COPY startup.py /app/startup.py
-COPY monitor.py /app/monitor.py
-COPY startup.sh /app/startup.sh
+COPY . /app/impact-monitor
 
 
 RUN  . /opt/conda/etc/profile.d/conda.sh &&\ 
     conda env create -f /app/environment.yml && \
     conda activate impact-monitor && \
-    chmod +x /app/startup.sh
+    pip install /app/impact-monitor && \
+    chmod +x /app/impact-monitor/startup.sh
 
-CMD ./app/startup.sh
+CMD ./app/impact-monitor/startup.sh

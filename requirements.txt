@@ -1,0 +1,4 @@
+python=3.9
+pymongo
+python-dateutil
+watchdog

@@ -56,12 +56,13 @@ class Watcher:
         except KeyboardInterrupt:
             self.observer.stop()
 
+
 def run(mongo_host, mongo_port, output_dir):
     watcher = Watcher(mongo_host, mongo_port, output_dir)
     watcher.run()
 
 
-if __name__ == "__main__":
+def main():
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
@@ -71,3 +72,7 @@ if __name__ == "__main__":
     OUTPUT_DIR = os.environ["OUTPUT_DIR"]
 
     run(MONGO_HOST, MONGO_PORT, OUTPUT_DIR)
+
+
+if __name__ == "__main__":
+    main()
